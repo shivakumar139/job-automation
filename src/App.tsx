@@ -5,18 +5,20 @@ import { internshalaAutomate } from './internshala';
 
 function App() {
 
-  const onclick = async () => {
+  
+  const internshala = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true});
     if (tab?.id !== undefined) {
       chrome.scripting.executeScript<string[], void>({
         target: { tabId: tab.id },
-        func: internshalaAutomate,
+        func: internshalaAutomate
       });
     } else {
       console.error('No active tab found or tab ID is undefined');
     }
   }
+  
 
   return (
     <>
@@ -32,7 +34,8 @@ function App() {
       <div className="card">
         
 
-        <button onClick={onclick}>Internshala</button>
+        <button onClick={internshala}>Internshala</button>
+        {/* <button onClick={createTab}>Stackoverflow</button> */}
       </div>
     </>
   )
